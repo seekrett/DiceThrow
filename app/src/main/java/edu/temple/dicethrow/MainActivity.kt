@@ -12,6 +12,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .add(R.id.fragmentContainerView, DieFragment())
+                .commit()
+        }
+
+        // safe to do when fragment is added during design time but not run time
         findViewById<Button>(R.id.rollDiceButton).setOnClickListener {
             // access function in DieFragment.kt from outside
             // grab reference to that fragment

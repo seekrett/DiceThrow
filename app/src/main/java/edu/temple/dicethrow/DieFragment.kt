@@ -9,6 +9,9 @@ import android.widget.TextView
 import kotlin.random.Random
 
 class DieFragment : Fragment() {
+    // for retaining die number
+    private val CURRENTDIENUM = "currentdienum"
+    private var dienum = 0
 
     val DIESIDE = "sidenumber"
 
@@ -37,11 +40,27 @@ class DieFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        throwDie()
+
+        // retain num
+        savedInstanceState?.run {
+            dienum = getInt(CURRENTDIENUM, 0)
+        }
+        if (dienum == 0) {
+            throwDie()
+        } else {
+            dieTextView.text = dienum.toString()
+        }
     }
 
     fun throwDie() {
         // nextInt() get 0 to param-1
-        dieTextView.text = (Random.nextInt(dieSides) + 1).toString()
+        dienum = (Random.nextInt(dieSides) + 1)
+        dieTextView.text = dienum.toString()
+    }
+
+    // to retain instance when rotating
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(CURRENTDIENUM, dienum)
     }
 }
