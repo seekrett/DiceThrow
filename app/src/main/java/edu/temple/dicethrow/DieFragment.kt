@@ -61,6 +61,7 @@ class DieFragment : Fragment() {
     // to retain instance when rotating
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        // store previous data
         outState.putInt(CURRENTDIENUM, dienum)
     }
 }
