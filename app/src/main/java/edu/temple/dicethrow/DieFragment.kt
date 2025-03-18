@@ -42,6 +42,7 @@ class DieFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // retain num
+        // if savedInstanceState is not null, program been here before
         savedInstanceState?.run {
             dienum = getInt(CURRENTDIENUM, 0)
         }
