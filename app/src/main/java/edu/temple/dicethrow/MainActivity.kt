@@ -14,7 +14,8 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .add(R.id.fragmentContainerView, DieFragment.newInstance(20))
+                .add(R.id.fragmentContainerView, DieFragment())
+                .add(R.id.fragmentContainerView2, DieFragment.newInstance(20))
                 .commit()
         }
 
