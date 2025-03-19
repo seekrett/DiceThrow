@@ -8,12 +8,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import kotlin.random.Random
 
+val CUSTOMDIENUM = "customdienumber"
+
 class DieFragment : Fragment() {
     // for retaining die number
     private val CURRENTDIENUM = "currentdienum"
     private var dienum = 0
-
-    val DIESIDE = "sidenumber"
 
     lateinit var dieTextView: TextView
 
@@ -22,7 +22,7 @@ class DieFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            it.getInt(DIESIDE).run {
+            it.getInt(CUSTOMDIENUM).run {
                 dieSides = this
             }
         }
@@ -64,5 +64,18 @@ class DieFragment : Fragment() {
         super.onSaveInstanceState(outState)
         // store previous data
         outState.putInt(CURRENTDIENUM, dienum)
+    }
+
+    // LAB ACTIVITY
+    // accept the number sides the die should have
+    companion object {
+
+        fun newInstance (sides : Int) : DieFragment {
+            val fragment = DieFragment()
+            fragment.arguments = Bundle().apply {
+                putInt(CUSTOMDIENUM, sides)
+            }
+            return fragment
+        }
     }
 }
