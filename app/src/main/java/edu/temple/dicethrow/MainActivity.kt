@@ -26,6 +26,9 @@ class MainActivity : AppCompatActivity() {
             (supportFragmentManager
                 // returns a fragment instance           treated as a DieFragment.kt
                 .findFragmentById(R.id.fragmentContainerView) as DieFragment).throwDie()
+            (supportFragmentManager
+                // returns a fragment instance           treated as a DieFragment.kt
+                .findFragmentById(R.id.fragmentContainerView2) as DieFragment).throwDie()
         }
     }
 }
