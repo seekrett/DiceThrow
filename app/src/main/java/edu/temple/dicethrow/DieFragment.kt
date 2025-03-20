@@ -6,19 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import kotlin.random.Random
 
 class DieFragment : Fragment() {
-    // for retaining die number
+    /*
+    removed:
     private val CURRENTDIENUM = "currentdienum"
     private var dienum = 0
+     */
+    var dieSides: Int = 6
 
     val DIESIDE = "sidenumber"
 
     lateinit var dieTextView: TextView
 
-    var dieSides: Int = 6
+    lateinit var dieViewModel: DieViewModel
 
+    // state information
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -26,6 +31,7 @@ class DieFragment : Fragment() {
                 dieSides = this
             }
         }
+        dieViewModel = ViewModelProvider(requireActivity())[DieViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -41,28 +47,15 @@ class DieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // retain num
-        // if savedInstanceState is not null, program been here before
-        savedInstanceState?.run {
-            dienum = getInt(CURRENTDIENUM, 0)
+        //                               my lifecycle v
+        dieViewModel.getCurrentRoll().observe(viewLifecycleOwner) {
+            dieTextView.text = it.toString()
         }
-        if (dienum == 0) {
-            throwDie()
-        } else {
-            dieTextView.text = dienum.toString()
+
+        if (dieViewModel.getCurrentRoll().value == null) {
+            dieViewModel.rollDie()
         }
     }
 
-    fun throwDie() {
-        // nextInt() get 0 to param-1
-        dienum = (Random.nextInt(dieSides) + 1)
-        dieTextView.text = dienum.toString()
-    }
-
-    // to retain instance when rotating
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        // store previous data
-        outState.putInt(CURRENTDIENUM, dienum)
-    }
+    // removed onSavedInstanceState
 }

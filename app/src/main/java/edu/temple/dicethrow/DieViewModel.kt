@@ -3,8 +3,12 @@ package edu.temple.dicethrow
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlin.random.Random
 
 class DieViewModel : ViewModel() {
+
+    private var dieSides: Int = 6
+
     // val because data inside changes but livedata is the same
     //      to observe data changes   v                 v delay instantiation; create only when needed
     private val currentRoll : MutableLiveData<Int> by lazy {
@@ -17,4 +21,12 @@ class DieViewModel : ViewModel() {
         return currentRoll
     }
 
+    // change livedata object
+    fun setCurrentRoll(roll: Int) {
+        currentRoll.value = roll
+    }
+
+    fun rollDie() {
+        setCurrentRoll(Random.nextInt(dieSides) + 1)
+    }
 }
